@@ -34,40 +34,9 @@ Then configure the linker in CodeBlocks:
 
 -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32
 
-## 4. OpenGL / GLUT notes for the cube demo
-The OpenGL demo file uses GLUT and GLU. If the system does not provide GLUT directly, use FreeGLUT instead.
 
-### Preferred option
-Install FreeGLUT and link with:
 
--lfreeglut -lopengl32 -lglu32
-
-### If system has only raw GLUT
-Use:
-
--lglut32 -lopengl32 -lglu32
-
-### With MinGW on Windows
-The usual include headers are:
-
-#include <GL/glut.h>
-#include <GL/glu.h>
-
-### If using Linux or a non-Windows toolchain
-Use the system package manager:
-- Ubuntu/Debian: sudo apt install freeglut3-dev libglu1-mesa-dev
-- Fedora: sudo dnf install freeglut-devel mesa-libGLU-devel
-
-Then compile with:
-
-g++ lap_24_opengl_3d_cube_demo_issue.cpp -o cube -lglut -lGLU -lGL
-
-## 5. Important note
-The BGI programs are Windows-oriented because they rely on graphics.h and WinBGIm. If you are working on Linux, these programs may require a Windows cross-compiler or a virtualized Windows environment for execution.
-
-For the newer transformed demos, the project now includes separate folders for 2D and 3D transformation examples so each operation can be studied on its own.
-
-# Colors
+# 4. Colors
 
 The colors are available at:
 https://www.geeksforgeeks.org/c/setcolor-function-c/
