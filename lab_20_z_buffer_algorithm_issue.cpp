@@ -4,6 +4,8 @@
 #define WIDTH 4
 #define HEIGHT 4
 
+// Show in figure as well
+
 int main() {
     int image[WIDTH][HEIGHT];
     float zbuffer[WIDTH][HEIGHT];

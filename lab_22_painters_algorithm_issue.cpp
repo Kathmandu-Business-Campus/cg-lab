@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Show in figure as well
+
 typedef struct {
     int id;
     float avg_depth;

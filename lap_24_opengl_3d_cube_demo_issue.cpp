@@ -3,6 +3,8 @@
 static float rotX = 0.0f;
 static float rotY = 0.0f;
 
+// Trying using glu as given by mingw
+
 void drawCube(void) {
     glBegin(GL_QUADS);
     glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);

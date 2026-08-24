@@ -1,0 +1,34 @@
+lab_05:
+- This program is not properly drawing the ellipse
+
+lab_10 to lab_14
+- These are duplicate programs covered by 2d transformation
+
+lab_15:
+- Seperate each option into different program in new folder 2d_transformation/
+- Reflection x and y issue
+
+
+lab_16:
+- Seperate each option into different program in new folder 3d_transformation/
+- Rendering takes time
+- No methods seems to work with output
+
+lab_17:
+- Output is not visualized and program is taking long time to run
+
+lab_19:
+- No clipping is visible and table output is not visible
+
+lab_20:
+- Show in figure as well
+
+lab_21:
+- Show in figure as well
+
+lab_22:
+- Show in figure as well
+
+lab_24:
+- Trying using glu as given by mingw without glut if possible
+- If not possible, give add glut setup steps in README.md

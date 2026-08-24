@@ -5,6 +5,9 @@
 
 #define SIZE 8
 
+// Seperate each transformation into its own program
+// Rendering takes time
+
 struct Point3D {
     float x, y, z;
 };
