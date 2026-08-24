@@ -1,20 +1,20 @@
 #include <GL/glut.h>
+#include <GL/glu.h>
 
 static float rotX = 0.0f;
 static float rotY = 0.0f;
 
-// Trying using glu as given by mingw
-
 void drawCube(void) {
     glBegin(GL_QUADS);
+
     glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
     glColor3f(0.0f, 1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
     glColor3f(0.0f, 0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
     glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
 
-    glColor3f(1.0f, 0.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+    glColor3f(1.0f, 0.5f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
     glColor3f(0.0f, 1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
-    glColor3f(0.0f, 0.0f, 0.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
+    glColor3f(0.5f, 0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
     glColor3f(1.0f, 1.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
 
     glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
@@ -36,6 +36,7 @@ void drawCube(void) {
     glColor3f(1.0f, 1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
     glColor3f(1.0f, 1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
     glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
+
     glEnd();
 }
 
@@ -58,8 +59,8 @@ void reshape(int w, int h) {
 }
 
 void keyboard(unsigned char key, int x, int y) {
-    if (key == 'x') rotX += 10.0f;
-    if (key == 'y') rotY += 10.0f;
+    if (key == 'x' || key == 'X') rotX += 10.0f;
+    if (key == 'y' || key == 'Y') rotY += 10.0f;
     if (key == 27) exit(0);
     glutPostRedisplay();
 }

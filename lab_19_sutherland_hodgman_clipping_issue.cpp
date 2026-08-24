@@ -4,90 +4,120 @@
 
 #define MAX 20
 
-int inside(double x, double y, int edge) {
-    if (edge == 0) return y >= 0;
-    if (edge == 1) return x <= 200;
-    if (edge == 2) return y <= 200;
-    if (edge == 3) return x >= 0;
-    return 0;
-}
+typedef struct {
+    int x, y;
+} Point;
 
-double intersection(double x1, double y1, double x2, double y2, int edge) {
-    double x, y;
-    if (edge == 0) {
-        x = x1 + (0 - y1) * (x2 - x1) / (y2 - y1);
-        y = 0;
-    } else if (edge == 1) {
-        x = 200;
-        y = y1 + (200 - x1) * (y2 - y1) / (x2 - x1);
-    } else if (edge == 2) {
-        x = x1 + (200 - y1) * (x2 - x1) / (y2 - y1);
-        y = 200;
-    } else {
-        x = 0;
-        y = y1 + (0 - x1) * (y2 - y1) / (x2 - x1);
+int inside(Point p, int edge, int xmin, int xmax, int ymin, int ymax) {
+    switch (edge) {
+        case 0: return p.y >= ymin; break;  // bottom edge
+        case 1: return p.x <= xmax; break;  // right edge
+        case 2: return p.y <= ymax; break;  // top edge
+        case 3: return p.x >= xmin; break;  // left edge
+        default: return 0;
     }
-    return (edge == 0 || edge == 2) ? y : x;
 }
 
-void draw_polygon(int x[], int y[], int n, int color) {
+Point intersect(Point p1, Point p2, int edge, int xmin, int xmax, int ymin, int ymax) {
+    double t;
+    Point r;
+
+    if (edge == 0) {
+        t = (double)(ymin - p1.y) / (p2.y - p1.y);
+    } else if (edge == 1) {
+        t = (double)(xmax - p1.x) / (p2.x - p1.x);
+    } else if (edge == 2) {
+        t = (double)(ymax - p1.y) / (p2.y - p1.y);
+    } else {
+        t = (double)(xmin - p1.x) / (p2.x - p1.x);
+    }
+
+    r.x = (int)(p1.x + t * (p2.x - p1.x));
+    r.y = (int)(p1.y + t * (p2.y - p1.y));
+    return r;
+}
+
+void draw_polygon(Point p[], int n, int color) {
     int i;
     setcolor(color);
     for (i = 0; i < n; i++) {
-        line(x[i], y[i], x[(i + 1) % n], y[(i + 1) % n]);
+        line(p[i].x, p[i].y, p[(i + 1) % n].x, p[(i + 1) % n].y);
     }
+}
+
+void print_points(Point p[], int n, const char *label) {
+    int i;
+    printf("%s: ", label);
+    for (i = 0; i < n; i++) {
+        printf("(%d,%d) ", p[i].x, p[i].y);
+    }
+    printf("\n");
 }
 
 int main() {
     int gd = DETECT, gm;
-    int i, n = 5;
-    int x[MAX] = {20, 180, 140, 80, 20};
-    int y[MAX] = {20, 20, 120, 160, 20};
-    int out[MAX], outx[MAX], outy[MAX], count;
+    int n = 5, i, edge;
+    int xmin = 50, xmax = 250, ymin = 50, ymax = 250;
+    Point polygon[5] = {{20, 50}, {120, 20}, {220, 80}, {180, 220}, {60, 180}};
+    Point input[MAX], output[MAX];
+    Point poly[MAX];
+
+    for (i = 0; i < n; i++) {
+        poly[i] = polygon[i];
+    }
+
+    printf("Sutherland-Hodgman Polygon Clipping Demo\n");
+    printf("Clipping window: x = [%d,%d], y = [%d,%d]\n\n", xmin, xmax, ymin, ymax);
 
     initgraph(&gd, &gm, "C:\\TURBOC3\\BGI");
+    setbkcolor(BLACK);
+    cleardevice();
 
-    draw_polygon(x, y, n, WHITE);
-    outtextxy(20, 20, "Original Polygon");
+    rectangle(xmin, ymin, xmax, ymax);
+    outtextxy(20, 20, "Clipping Window");
+
+    draw_polygon(poly, n, WHITE);
+    outtextxy(20, 35, "Original Polygon");
     getch();
     cleardevice();
 
-    for (i = 0; i < 4; i++) {
-        count = 0;
-        for (int j = 0; j < n; j++) {
-            int k = (j + 1) % n;
-            int s1 = inside(x[j], y[j], i);
-            int s2 = inside(x[k], y[k], i);
+    rectangle(xmin, ymin, xmax, ymax);
+    for (i = 0; i < n; i++) {
+        input[i] = poly[i];
+    }
 
-            if (s1 && s2) {
-                out[count++] = (int)x[k];
-                outy[count++] = (int)y[k];
-            } else if (s1 && !s2) {
-                outx[count] = x[j];
-                outy[count] = y[j];
-                count++;
-                outx[count] = x[j];
-                outy[count] = y[j];
-                count++;
-            } else if (!s1 && s2) {
-                outx[count] = x[j];
-                outy[count] = y[j];
-                count++;
-                outx[count] = x[j];
-                outy[count] = y[j];
-                count++;
+    for (edge = 0; edge < 4; edge++) {
+        int count = 0;
+        print_points(input, n, "Before edge");
+        for (i = 0; i < n; i++) {
+            int j = (i + 1) % n;
+            Point p1 = input[i];
+            Point p2 = input[j];
+            int in1 = inside(p1, edge, xmin, xmax, ymin, ymax);
+            int in2 = inside(p2, edge, xmin, xmax, ymin, ymax);
+
+            if (in1 && in2) {
+                output[count++] = p2;
+            } else if (in1 && !in2) {
+                output[count++] = intersect(p1, p2, edge, xmin, xmax, ymin, ymax);
+            } else if (!in1 && in2) {
+                output[count++] = intersect(p1, p2, edge, xmin, xmax, ymin, ymax);
+                output[count++] = p2;
             }
         }
 
-        for (int j = 0; j < count; j++) {
-            x[j] = outx[j];
-            y[j] = outy[j];
+        for (i = 0; i < count; i++) {
+            input[i] = output[i];
         }
         n = count;
+        printf("After edge %d: %d points\n", edge + 1, n);
+        print_points(input, n, "Current");
     }
 
-    draw_polygon(x, y, n, GREEN);
+    setcolor(GREEN);
+    draw_polygon(input, n, GREEN);
     outtextxy(20, 20, "Clipped Polygon");
+
     getch();
     closegraph();
     return 0;

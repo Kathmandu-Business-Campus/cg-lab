@@ -30,6 +30,13 @@ int main() {
     Point3D view = {0, 0, -1};
     Point3D u, v, normal;
 
+    printf("Back-face Culling Demo\n");
+    printf("Figure:\n");
+    printf("      P3\n");
+    printf("      /\\\n");
+    printf("     /  \\\n");
+    printf("P1---P2\n\n");
+
     u.x = t.p2.x - t.p1.x;
     u.y = t.p2.y - t.p1.y;
     u.z = t.p2.z - t.p1.z;
@@ -41,6 +48,7 @@ int main() {
     normal = cross(u, v);
 
     printf("Triangle normal: (%.2f, %.2f, %.2f)\n", normal.x, normal.y, normal.z);
+    printf("View direction: (%.2f, %.2f, %.2f)\n", view.x, view.y, view.z);
 
     if (dot(normal, view) < 0) {
         printf("Back-face removed: triangle is facing away from the viewer.\n");
