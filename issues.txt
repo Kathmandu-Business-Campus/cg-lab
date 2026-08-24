@@ -1,4 +1,4 @@
-lab_05:
+lab_05: [done]
 - This program is not properly drawing the ellipse
 
 lab_10 to lab_14
@@ -14,7 +14,7 @@ lab_16:
 - Rendering takes time
 - No methods seems to work with output
 
-lab_17:
+lab_17: [still_issue]
 - Output is not visualized and program is taking long time to run
 
 lab_19:

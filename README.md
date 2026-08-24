@@ -66,3 +66,8 @@ g++ lap_24_opengl_3d_cube_demo_issue.cpp -o cube -lglut -lGLU -lGL
 The BGI programs are Windows-oriented because they rely on graphics.h and WinBGIm. If you are working on Linux, these programs may require a Windows cross-compiler or a virtualized Windows environment for execution.
 
 For the newer transformed demos, the project now includes separate folders for 2D and 3D transformation examples so each operation can be studied on its own.
+
+# Colors
+
+The colors are available at:
+https://www.geeksforgeeks.org/c/setcolor-function-c/
