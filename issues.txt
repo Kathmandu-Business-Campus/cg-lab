@@ -1,6 +1,0 @@
-lab_18: [still_issue]
-- Output is not visualized and program is taking long time to run
-
-lab_25: [still_issue]
-- Trying using glu as given by mingw without glut if possible
-- If not possible, give add glut setup steps in README.md
