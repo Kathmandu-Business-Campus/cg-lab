@@ -40,3 +40,39 @@ Then configure the linker in CodeBlocks:
 
 The colors are available at:
 https://www.geeksforgeeks.org/c/setcolor-function-c/
+
+# 6. For freeglut library
+
+PLEASE CONFIRM WHICH VERSION OF MINGW YOU ARE USINBG [DEFAULT IS 32 BIT].
+
+## Version Check
+
+- Go to bin directory of MINGW [Default: C:\MINGW\bin]
+- In cmd in this directory run gcc.exe -v
+- If you see somethong that has 32 in it, then  you are using 32 bit version and if you see 64, you are using 64 bit version
+
+## Installation
+1. From ./freeglut/bin copy libfreeglut.dll to bin directory of MINGW installation directory. use x64/libfreeglut.dll if you are using 64 bit version
+2. From include/GL copy everything to include/GL directory of your mingw installation [default copy to C:\MINGW\include\GL]
+3. From ./freeglut/lib copy libfreeglut.dll.a and to lib directory of MINGW installation directory. use files in x64/ directory if you are using 64 bit version
+
+4. Then configure the linker in CodeBlocks:
+- Settings -> Compiler
+- Linker Settings
+- Add the following libraries:
+
+-lfreeglut -lopengl32 -lglu32
+
+If you are using 64 bit mingw use the following libraries instead
+-lfreeglut -lopengl -lglu
+
+OR
+
+
+-lfreeglut -lopengl64 -lglu64
+
+This depends on your 64 bit compiler
+
+You can now run lab 25
+
+
